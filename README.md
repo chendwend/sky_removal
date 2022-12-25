@@ -1,8 +1,9 @@
 Sky removal
 ============================  
+Process images to crop out the sky.
 ## General Information
-   Using COCO dataset, process the dataset to create a new dataset in which the sky is cropped.  
-   This is done using Facebook's Detectron2 model. 
+   In this project, using COCO dataset we process it to create a new dataset in which the sky is cropped.  
+   This is done using Facebook's Detectron2 panoptic segmentation model. 
 
 ## Installation
    All required packages to be installed are in 'Installations' cell. 
@@ -39,7 +40,7 @@ If no, we leave the image as it is.
 3. Identify and store the sky category id from the Metadata of detectron2 model, which is part of the 'stuff_classes' categories.
 4. For each image in the dataset:
     1.  load the image
-    2.  get panoptic segmentation tensor (which containts category id for each pixel) and segemnts info that contains which categories are present in the image.
+    2.  get panoptic segmentation tensor (which containts category id for each pixel) and segments info that contains which categories are present in the image.
         This is acquired via applying the loaded model on the image.
     3.  Identify the corresponding sky segment id for the image (which could be different for each image), or return 0 if not present
     4. if sky segment id is not present in the image, the processed image = original image.
@@ -47,3 +48,4 @@ If no, we leave the image as it is.
         1. find highest row index of sky segment id in the image.
         2. if highest row index = number of rows -1, continue to next image, else crop the image from index to 0.
   6. write the cropped image into processed dataset directory 
+  7. Plot randomly selected processed images using Detectron2's visualizer, by applying panoptic segmentation model and object detection model.
